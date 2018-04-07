@@ -85,4 +85,91 @@ fun main(args: Array<String>) {
 
 	}
 
+	/**
+	 * class instantiation
+	 */
+	val niceBucket: Bucket = BucketDemoImpl(3)
+	val greatBucket: Bucket = BucketDemoImpl(9)
+	niceBucket.fill()
+	niceBucket.pourTo(greatBucket)
+	println(niceBucket.quantity)
+	println(greatBucket.quantity)
+
+}
+
+/**
+ * * class
+ */
+class BucketDemoImpl(_capacity: Int) : Bucket {
+
+	override val capacity = _capacity
+
+	override var quantity: Int = 0
+
+	override fun fill() {
+		quantity = capacity
+	}
+
+	override fun drainAway() {
+		quantity = 0
+	}
+
+	override fun pourTo(that: Bucket) {
+		val thatVacuity = that.capacity - that.quantity
+		if (capacity <= thatVacuity) {
+			that.quantity += quantity
+			drainAway()
+		} else {
+			that.fill()
+			quantity -= thatVacuity
+		}
+	}
+
+}
+
+
+/**
+ * * class and property
+ */
+class Person {
+
+	/**
+	 * with automatically generated Backing-field
+	 */
+	var name: String = ""
+	var age: Int = 0
+	lateinit var atode: String//no need to init. Be careful not to access before initializing
+
+	/**
+	 * with Custom-getter
+	 * without Backing-field
+	 */
+	val nameLength: Int
+		get(): Int {
+			return this.name.length
+		}
+	// get() = name.length //`this` is redundant.
+
+}
+
+/**
+ * * Primary constructor
+ */
+class RationalwithConstructorKeyword constructor(n: Int, d: Int) {
+	val numerator: Int = n
+	val denominator: Int = d + 999//oe something else..
+}
+
+/**
+ * * Primary constructor
+ * * using parameters as properties
+ */
+class RationalWithPropertyconstructor(val numerator: Int, val denominator: Int/* can set a default value */) {
+
+	/**
+	 * Secondary constructor
+	 * TODO: research more
+	 */
+	constructor(numerator: Int) : this(numerator, 1)
+
 }
