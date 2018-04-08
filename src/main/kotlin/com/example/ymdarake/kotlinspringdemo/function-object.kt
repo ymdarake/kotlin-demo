@@ -62,28 +62,28 @@ fun main(args: Array<String>) {
 	/**
 	 * * object expression
 	 */
-	fun createBucket(capacity: Int): Bucket = object : Bucket {
-
-		override fun fill() {
-			quantity = capacity
-		}
-
-		override fun drainAway() {
-			quantity = 0
-		}
-
-		override fun pourTo(that: Bucket) {
-			val thatVacuity = that.capacity - that.quantity
-			if (quantity <= thatVacuity) {
-				that.quantity += quantity
-				drainAway()
-			} else {
-				that.fill()
-				quantity -= thatVacuity
-			}
-		}
-
-	}
+//	fun createBucket(capacity: Int): Bucket = object : Bucket {
+//
+//		override fun fill() {
+//			quantity = capacity
+//		}
+//
+//		override fun drainAway() {
+//			quantity = 0
+//		}
+//
+//		override fun pourTo(that: Bucket) {
+//			val thatVacuity = that.capacity - that.quantity
+//			if (quantity <= thatVacuity) {
+//				that.quantity += quantity
+//				drainAway()
+//			} else {
+//				that.fill()
+//				quantity -= thatVacuity
+//			}
+//		}
+//
+//	}
 
 	/**
 	 * class instantiation
@@ -173,3 +173,21 @@ class RationalWithPropertyconstructor(val numerator: Int, val denominator: Int/*
 	constructor(numerator: Int) : this(numerator, 1)
 
 }
+
+/**
+ * * Extension
+ */
+class ExtenstionDemo {
+	/**
+	 * * extension function
+	 */
+	fun String.countWords(): Int = this.split("""\s+""".toRegex()).size
+	val hoge = "hoge hoge".countWords()
+
+	/**
+	 * * extension property
+	 */
+	val String.wordsCount: Int
+		get() = split("""\s+""".toRegex()).size
+}
+
