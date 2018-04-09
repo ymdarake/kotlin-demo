@@ -138,7 +138,7 @@ class JapaneseGreeterWithRecording: GreeterDemo {
 /**
  * * class delegation
  */
-class GreeterWithRecording(private val greeter: Greeter) : GreeterDemo by greeter {
+class GreeterWithRecording(private val greeter: GreeterDemo) : GreeterDemo by greeter {
 	/**
 	 * `Greeter by greeter` means that 'This class implement the Greeter, but members not implemented are delegated to `greeter`'.
 	 */
