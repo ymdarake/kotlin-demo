@@ -101,3 +101,58 @@ class Baz: BarEx {
 		println("simple implementation")
 	}
 }
+
+/**
+ * * Decorator (NOTE: use delegation described in the next section)
+ */
+interface GreeterDemo {
+	fun sayHello(target: String)
+	fun sayHello()
+}
+class JapaneseGreeterDemo: GreeterDemo {
+	override fun sayHello() {
+		println("こんにちは、匿名さん")
+	}
+	override fun sayHello(target: String) {
+		println("こんにちは、${target}さん")
+	}
+}
+class JapaneseGreeterWithRecording: GreeterDemo {
+
+	private val greeter: GreeterDemo = JapaneseGreeterDemo()
+	private val _targets: MutableSet<String> = mutableSetOf()
+	val targets: Set<String>
+		get() = _targets
+
+	override fun sayHello() {
+		greeter.sayHello()
+	}
+
+	override fun sayHello(target: String) {
+		_targets += target
+		greeter.sayHello(target)
+	}
+
+}
+
+/**
+ * * class delegation
+ */
+class GreeterWithRecording(private val greeter: Greeter) : GreeterDemo by greeter {
+	/**
+	 * `Greeter by greeter` means that 'This class implement the Greeter, but members not implemented are delegated to `greeter`'.
+	 */
+	private val _targets: MutableSet<String> = mutableSetOf()
+	val targets: Set<String>
+		get() = _targets
+
+	override fun sayHello(target: String) {
+		_targets += target
+		greeter.sayHello(target)
+	}
+
+	/**
+	 * no need to implement `sayHello()`
+	 * instead, greeter.sayHello() will be called
+	 */
+}
